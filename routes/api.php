@@ -20,13 +20,10 @@ use App\Http\Controllers\Api\CompanyListController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::post('/login', [LoginController::class, 'index'])->name('login');
 
+
 Route::group(['middleware' => ['auth:sanctum'], 'prefix' => 'v1'], function () {
-    Route::get('/employees', [EmployeeListController::class]);
-    Route::get('/companies', [CompanyListController::class]);
+    Route::get('/employees', EmployeeListController::class);
+    Route::get('/companies', CompanyListController::class);
 });

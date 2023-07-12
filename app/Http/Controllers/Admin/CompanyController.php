@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CompanyRequest;
 use App\Http\Services\CompanyService;
 use App\Models\Company;
 use Illuminate\Http\RedirectResponse;
@@ -44,14 +45,8 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request): RedirectResponse
+    public function store(CompanyRequest $request): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'website' => 'required|string|max:512',
-        ]);
-
         $this->companyService->create($request->all());
 
         return redirect()->route('companies.index')
@@ -87,14 +82,8 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Company $company): RedirectResponse
+    public function update(CompanyRequest $request, Company $company): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'website' => 'required|string|max:512',
-        ]);
-
         $this->companyService->update($company, $request->all());
 
         return redirect()->route('companies.index')
